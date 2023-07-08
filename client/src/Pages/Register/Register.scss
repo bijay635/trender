@@ -84,6 +84,24 @@
           }
         }
       }
+      button {
+        width: wrap-content;
+        padding: 10px;
+        border: none;
+        color: white;
+        background-color: #938eef;
+        font-weight: bold;
+        cursor: pointer;
+        &:hover{
+          color: rgba(189, 22, 214, 0.7);
+        }
+        .google-register {
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+          margin-left: 5px;
+        }
+      }
     }
   }
 }

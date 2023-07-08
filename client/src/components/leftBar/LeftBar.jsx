@@ -1,4 +1,4 @@
-import './LeftBar.scss'
+import './leftBar.scss'
 import avatar from "../../assets/avatar.jpg"
 import Friends from "../../assets/1.png"
 import Groups from "../../assets/2.png"
