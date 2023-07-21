@@ -9,8 +9,12 @@ import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Link } from 'react-router-dom';
 import avatar from "../../assets/avatar.jpg"
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 
 const Navbar = () => {
+  const {toggleActive, setToggleActive} = useContext(UserContext);
+
   return (
     <div className='navbar'>
       <div className="left">
@@ -26,6 +30,9 @@ const Navbar = () => {
         </div>
       </div>
       <div className="right">
+      <button onClick={() => toggleActive === "off" ? setToggleActive("on") : setToggleActive("off")}>
+        <img src='/Images/add.png' width="25px" />
+      </button>
       <Person2OutlinedIcon/>
       <EmailOutlinedIcon/>
       <NotificationsOutlinedIcon/>

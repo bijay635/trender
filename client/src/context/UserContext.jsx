@@ -25,9 +25,11 @@ export function UserContextProvider({children}) {
     })
   }, []);
   
+  // state for post form
+  const [toggleActive, setToggleActive] = useState("off");
   
   return (
-    <UserContext.Provider value={{authenticated, setAuthenticated}}>
+    <UserContext.Provider value={{authenticated, setAuthenticated, toggleActive, setToggleActive}}>
       {children}
     </UserContext.Provider>
   )
