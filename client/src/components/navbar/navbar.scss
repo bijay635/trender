@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  height: 50px;
+  height: 30px;
   border-bottom: 1px solid lightgray;
   position: sticky;
   top: 0;
@@ -13,15 +13,19 @@
     align-items: center;
     gap: 30px;
     span{
-      font-weight: bold;
-      font-size: 20px;
-      color: rgb(100, 20, 118);
+      font-family: "Brush Script MT", "Lucida Handwriting", Sans-serif;
+      color: rgb(251, 110, 16);
+      text-shadow: 1px 1px 1px red;
+      font-size: 30px;
     }
-
+    .homeIcon{
+      margin-left: 30%;
+        
+    }
     .search{
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 30px;
       border: 1px solid lightgray;
       border-radius: 5px;
       padding: 5px;
@@ -42,19 +46,18 @@
       align-items: center;
       gap: 10px;
       font-weight: 500;
-
-
       img{
         width: 30px;
         height: 30px;
         border-radius: 50%;
         object-fit: cover;
-        
       }
+    }
 
-      span{
-
-      }
+    button {
+      border: none;
+      background-color: white;
+      cursor: pointer;
     }
   }
 

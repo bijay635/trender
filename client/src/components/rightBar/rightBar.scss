@@ -4,49 +4,46 @@
   top: 70px;
   height: calc(100vh - 70px);
   overflow: scroll;
-  background-color: #f6f3f3;
-
-
+  background-color: lightsalmon;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 25px;
   &::-webkit-scrollbar{
     display: none;
   }
   .container{
     padding: 20px;
-
+    background-color: rgb(249, 173, 145);
+    box-shadow: 10px 10px;
     .item{
       -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
       -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
-      box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+      box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09); 
       padding: 20px;
       margin-bottom: 20px;
-      background-color: white;
+      background-color: whitesmoke;
       margin-bottom: 20px;
-
-
+      border-radius: 5%;
+      container.item:hover, container.item:active {font-size: 150%;}
       span{
         color: gray;
       }
-
       .user{
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin: 20px 0px;
-
         .userInfo{
           display: flex;
           align-items: center;
           gap: 20px;
           position: relative;
-
           img{
             width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            
           }
-
           .online{
             width: 12px;
             height: 12px;
@@ -55,26 +52,19 @@
             position: absolute;
             top: 0;
             left: 30px;
-            
           }
-
           p{
-
             color: grey;
-
           }
-
           span{
             font-weight: 500;
             color: black;
           }
         }
-
         .buttons{
           display: flex;
           align-items: center;
           gap: 10px;
-
           button{
             border: none;
             padding: 5px;
@@ -82,18 +72,15 @@
             cursor: pointer;
 
             &:first-child{
-              background-color: #5271ff;
+              background-color: orange;
             }
 
             &:last-child{
-              background-color: #f0544f;
+              background-color: red;
             }
-
           }
         }
-
       }
-
     }
   }
 }
