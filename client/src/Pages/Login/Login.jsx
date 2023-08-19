@@ -41,7 +41,7 @@ const Login = () => {
         setAuthenticated(true);
         localStorage.setItem(
           import.meta.env.VITE_LOCALHOST_KEY,
-          JSON.stringify({status: true}),
+          JSON.stringify({status: true, user: data.user}),
         );
         console.log("set in login");
         navigate("/");

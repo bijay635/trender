@@ -4,6 +4,8 @@ import axios from "axios"
 import "./Register.scss"
 import { UserContext } from "../../context/UserContext"
 import GoogleIcon from '@mui/icons-material/Google';
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Register = () => {
@@ -14,26 +16,41 @@ const Register = () => {
 
   const {authenticated, setAuthenticated} = useContext(UserContext);
 
+  const toastOptions = {
+    postition: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  }
+
   const navigate = useNavigate();
 
   async function handleSubmit(ev) {
     ev.preventDefault();
-    const {data} = await axios.post("/auth/register", {name, username, email, password});
-
-    if (data.status === true) {
-      setAuthenticated(true);
-      localStorage.setItem(
-        import.meta.env.VITE_LOCALHOST_KEY,
-        JSON.stringify({status: true}),
-      );
-      console.log("set in register");
-      navigate("/");
+    try {
+      const {data} = await axios.post("/auth/register", {name, username, email, password});
+      if (data.status === true) {
+        setAuthenticated(true);
+        localStorage.setItem(
+          import.meta.env.VITE_LOCALHOST_KEY,
+          JSON.stringify({status: true, user: data.user}),
+        );
+        console.log("set in register");
+        navigate("/");
+      }
+    } catch (err) {
+      // toast.error(err.response.data.message, toastOptions);
+      toast.error("A user with the given username/email is already registered", toastOptions);
     }
   }
 
   const googleAuth = () => {
     window.open(
-      `${import.meta.env.VITE_API_URL}/auth/google`,
+      `${import.meta.env.VITE_API_URL}/auth/google/callback`,
       "_self"
     );
   }
@@ -45,8 +62,21 @@ const Register = () => {
   }, []);
 
   return (
-    <div className="register">
-      <div className="card">
+    <>
+      <ToastContainer 
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <div className="register">
+        <div className="card">
           <div className="left">
             <h1>Anonymous Surf</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem perspiciatis at dolore corporis, quidem doloribus rerum, consequuntur cum ratione sit provident facere quis atque delectus ipsa. Maiores eveniet quod modi?</p>
@@ -102,6 +132,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+    </>
   )
 }
 

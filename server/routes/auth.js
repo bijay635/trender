@@ -5,7 +5,7 @@ const {
   login,
   google,
   googleCallback
-} = require("../controllers/userController");
+} = require("../controllers/authController");
 
 const router = require("express").Router();
 
