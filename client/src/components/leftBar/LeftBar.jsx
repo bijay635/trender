@@ -33,10 +33,6 @@ const LeftBar = () => {
             <span>Groups</span>
           </div>
           <div className="item">
-            <img src={Market} alt="marketplace-logo" />
-            <span>Marketplace</span>
-          </div>
-          <div className="item">
             <img src={Watch} alt="watch-logo" />
             <span>Watch</span>
           </div>
@@ -55,14 +51,6 @@ const LeftBar = () => {
           <div className="item">
             <img src={Gaming} alt="gaming-logo" />
             <span>Gaming</span>
-          </div>
-          <div className="item">
-            <img src={Gallery} alt="gallery-logo" />
-            <span>Gallery</span>
-          </div>
-          <div className="item">
-            <img src={Videos} alt="videos-logo" />
-            <span>Videos</span>
           </div>
           <div className="item">
             <img src={Messages} alt="messages-logo" />
