@@ -21,13 +21,18 @@ const Navbar = () => {
         <Link to="/" style={{textDecoration:"none"}}>
         <span>AnonymousSurf</span>
         </Link>
-        <HomeOutlinedIcon/>
-        <DarkModeOutlinedIcon/>
-        <GridViewOutlinedIcon/>
+        <div className='homeIcon'>
+          <HomeOutlinedIcon/>
+        </div>
         <div className="search">
           <SearchOutlinedIcon/>
           <input type="text" placeholder='Search...' />
         </div>
+        <button onClick={() => toggleActive === "off" ? setToggleActive("on") : setToggleActive("off")}>
+        <img src='/Images/add.png' width="25px" />
+        </button>
+        <DarkModeOutlinedIcon/>
+        <GridViewOutlinedIcon/>
       </div>
       <div className="right">
       <button onClick={() => toggleActive === "off" ? setToggleActive("on") : setToggleActive("off")}>
@@ -38,7 +43,7 @@ const Navbar = () => {
       <NotificationsOutlinedIcon/>
       <div className="user">
          <img src={avatar} className='avatar' alt="" /> 
-        <span>Durgesh Gupta</span>
+        <span>function11()</span>
       </div>
       </div>
     </div>
