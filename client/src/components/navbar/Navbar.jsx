@@ -35,6 +35,9 @@ const Navbar = () => {
         <GridViewOutlinedIcon/>
       </div>
       <div className="right">
+      <button onClick={() => toggleActive === "off" ? setToggleActive("on") : setToggleActive("off")}>
+        <img src='/Images/add.png' width="25px" />
+      </button>
       <Person2OutlinedIcon/>
       <EmailOutlinedIcon/>
       <NotificationsOutlinedIcon/>

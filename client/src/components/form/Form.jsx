@@ -8,6 +8,7 @@ const Form = () => {
   const [preview, setPreview] = useState();
   const fileInputRef = useRef();
   console.log("Hi this is form")
+
   
   useEffect(() => {
     if (image) {

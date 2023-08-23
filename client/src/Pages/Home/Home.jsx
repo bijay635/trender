@@ -101,6 +101,7 @@ const Home = () => {
         return <Post postName={ps.postUser}
         imageurl={ps.imageurl} caption={ps.caption} likes={ps.likes} comments={ps.comments} />
       })}
+      <h1>Home</h1>
       <Form />
       <h3>{currentUser?.username}</h3>
     </div>
