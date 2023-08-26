@@ -15,7 +15,8 @@ const postRoutes = require("./routes/posts");
 const User = require("./models/User");
 const { verifyUser } = require("./middleware/auth");
 const { createPost } = require("./controllers/postController");
-const multerUpload = require("./middleware/multer");
+const { multerUpload } = require("./middleware/multer");
+const { cloudinaryConfig } = require("./config/cloudinaryConfig");
 
 dotenv.config();
 
@@ -69,6 +70,8 @@ function(accessToken, refreshToken, profile, cb) {
 }
 ));
 
+// Use Cloudinary Config
+app.use("*", cloudinaryConfig);
 
 // ROUTE WITH FILE
 app.post("/posts", verifyUser, multerUpload, createPost);

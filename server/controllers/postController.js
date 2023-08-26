@@ -1,16 +1,34 @@
+const { cloudinaryUploader } = require("../config/cloudinaryConfig");
+const { dataUri } = require("../middleware/multer");
 const Post = require("../models/Post");
+
 
 /* CREATE POST */
 module.exports.createPost = async (req, res) => {
+  const { userId, description } = req.body;
+  let picturePath = null;
+    
+  // Initialize a promise for the Cloudinary upload operation
+  const cloudinaryUploadPromise = req.file
+    ? new Promise((resolve, reject) => {
+      const file = dataUri(req).content;
+      cloudinaryUploader.upload(file)
+        .then((result) => {
+          resolve(result.secure_url);
+        })
+        .catch((err) => reject(err));
+      })
+    : Promise.resolve(null);
+      
+  // uploaded file to cloudinary, wait to obtain picturePath
   try {
-    const { userId, description } = req.body;
-    let picturePath = null;
-    if (req.file) {
-      // req.file.path gives the path from root directory
-      // i.e. public/assets/file_name
-      // slice(14) takes only the file_name
-      picturePath = req.file.path.slice(14);
-    }
+    picturePath = await cloudinaryUploadPromise;
+  } catch (err) {
+    console.error(err);
+  }
+      
+  // Create a new post with the obtained picturePath
+  try {
     // console.log(picturePath);
     const newPost = await Post.create({
       userId,
@@ -20,12 +38,14 @@ module.exports.createPost = async (req, res) => {
       comments: [],
     });
 
+    // Fetch the updated list of posts
     const post = await Post.find();
     res.status(201).json(post);
   } catch (err) {
     res.status(409).json({ message: err.message });
   }
 };
+
 
 /* READ POSTS */
 module.exports.getFeedPosts = async (req, res) => {
@@ -37,6 +57,7 @@ module.exports.getFeedPosts = async (req, res) => {
   }
 };
 
+
 module.exports.getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -46,6 +67,7 @@ module.exports.getUserPosts = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+
 
 /* UPDATE POST */
 module.exports.likePost = async (req, res) => {
@@ -70,6 +92,7 @@ module.exports.likePost = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+
 
 module.exports.commentPost = async (req, res) => {
   try {
