@@ -14,7 +14,7 @@ export function UserContextProvider({children}) {
       setAuthenticated(response.data.status);
       localStorage.setItem(
         import.meta.env.VITE_LOCALHOST_KEY,
-        JSON.stringify({status: true}),
+        JSON.stringify({status: true, user: response.data.user}),
       );
     })
     .catch((error) => {

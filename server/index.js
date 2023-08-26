@@ -3,22 +3,32 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+const morgan = require("morgan");
 const cors = require("cors");
+const multer = require("multer");
+const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const authRoutes = require("./routes/auth");
+const postRoutes = require("./routes/posts");
 const User = require("./models/User");
+const { verifyUser } = require("./middleware/auth");
+const { createPost } = require("./controllers/postController");
+const { multerUpload } = require("./middleware/multer");
+const { cloudinaryConfig } = require("./config/cloudinaryConfig");
 
 dotenv.config();
 
 const app = express();
+app.use(morgan("common"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors({
   credentials: true,
   origin: process.env.CLIENT_URL,
 }));
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -30,6 +40,7 @@ app.use(passport.session());
 
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true});
 
+// CONFIGURATION OF PASSPORT
 passport.use(User.createStrategy());
 
 // passport.serializeUser(User.serializeUser());
@@ -59,7 +70,14 @@ function(accessToken, refreshToken, profile, cb) {
 }
 ));
 
+// Use Cloudinary Config
+app.use("*", cloudinaryConfig);
+
+// ROUTE WITH FILE
+app.post("/posts", verifyUser, multerUpload, createPost);
+
 app.use("/auth", authRoutes);
+app.use("/posts", postRoutes);
 
 app.listen(4040, () => {
   console.log("Server started on port 4040");
