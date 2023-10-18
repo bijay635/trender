@@ -5,7 +5,7 @@ const Post = require("../models/Post");
 
 /* CREATE POST */
 module.exports.createPost = async (req, res) => {
-  const { userId, description } = req.body;
+  const { userId, username, description } = req.body;
   let picturePath = null;
     
   // Initialize a promise for the Cloudinary upload operation
@@ -32,14 +32,15 @@ module.exports.createPost = async (req, res) => {
     // console.log(picturePath);
     const newPost = await Post.create({
       userId,
+      username,
       description,
       picturePath,
       likes: {},
       comments: [],
     });
 
-    // Fetch the updated list of posts
-    const post = await Post.find();
+    // Fetch the updated list of posts, latest at the top
+    const post = await Post.find().sort({"updatedAt": -1});
     res.status(201).json(post);
   } catch (err) {
     res.status(409).json({ message: err.message });
@@ -50,7 +51,7 @@ module.exports.createPost = async (req, res) => {
 /* READ POSTS */
 module.exports.getFeedPosts = async (req, res) => {
   try {
-    const post = await Post.find();
+    const post = await Post.find().sort({"updatedAt": -1});
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -61,7 +62,7 @@ module.exports.getFeedPosts = async (req, res) => {
 module.exports.getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const post = await Post.find({ userId });
+    const post = await Post.find({ userId }).sort({"updatedAt": -1});
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });

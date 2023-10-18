@@ -8,8 +8,17 @@
         color: rgb(15, 14, 14);
         font-size: 30px;
     }
+
+    .spinner-gif {
+        position: relative;
+        z-index: 1;
+        width: 125px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
     .postValues{
-        min-height: 350px;
+        // min-height: 350px;
         max-width: 500px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }

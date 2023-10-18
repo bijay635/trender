@@ -14,7 +14,7 @@ const Login = () => {
     password: "",
   });
 
-  const {authenticated, setAuthenticated} = useContext(UserContext);
+  const {authenticated, setAuthenticated, setPosts} = useContext(UserContext);
 
   const toastOptions = {
     postition: "top-center",
@@ -41,9 +41,17 @@ const Login = () => {
         setAuthenticated(true);
         localStorage.setItem(
           import.meta.env.VITE_LOCALHOST_KEY,
-          JSON.stringify({status: true, user: data.user}),
+          JSON.stringify({status: true, user: data.user, username: username}),
         );
         console.log("set in login");
+        
+        // fetch posts
+        axios.get("/posts").then(response => {
+          setPosts(response.data);
+        })
+        .catch(err => {
+          setPosts([]);
+        });
         navigate("/");
       }
     } catch (err) {

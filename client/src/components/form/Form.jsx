@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import './form.scss'
 import { UserContext } from '../../context/UserContext'
 import axios from 'axios'
+import spinner from '../../assets/Spinner.gif'
 
 const Form = () => {
-  const {toggleActive, setToggleActive} = useContext(UserContext)
+  const {toggleActive, setToggleActive, setPosts} = useContext(UserContext)
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [post, setPost] = useState("");
+  const [loader, setLoader] = useState(false);
   const fileInputRef = useRef();
   console.log("Hi this is form")
 
@@ -27,15 +29,19 @@ const Form = () => {
   const handlePost = async(e) => {
     e.preventDefault();
 
-    const id = JSON.parse(localStorage.getItem(import.meta.env.VITE_LOCALHOST_KEY)).user;
+    setLoader(true);
+    const { user: id, username } = JSON.parse(localStorage.getItem(import.meta.env.VITE_LOCALHOST_KEY));
     const formData = new FormData();
     formData.append("userId", id);
+    formData.append("username", username);
     formData.append("description", post);
     if (image) {
       formData.append("picture", image);
     }
 
     const response = await axios.post("/posts", formData);
+    setPosts(response.data);
+    setLoader(false);
     setImage(null);
     setPost("");
     setToggleActive("off");
@@ -54,6 +60,7 @@ const Form = () => {
             value={post}
             onChange={e => setPost(e.target.value)}
            />
+          {loader && <img className='spinner-gif' src={spinner} alt='spinner' />}
         </div>
         <div className="image-upload">
           {preview ? (

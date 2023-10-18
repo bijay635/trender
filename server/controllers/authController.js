@@ -11,7 +11,7 @@ module.exports.test = (req, res) => {
 
 module.exports.profile = (req, res) => {
   if (req.isAuthenticated()) {
-    res.json({status: true, user: req.user._id});
+    res.json({status: true, user: req.user._id, username: req.user.username});
   } else {
     res.status(401).json({status: false});
   }
@@ -26,7 +26,7 @@ module.exports.register = (req, res) => {
     } else {
       passport.authenticate("local")(req, res, () => {
         console.log("user registered");
-        res.json({status: true, user: req.user._id});
+        res.json({status: true, user: req.user._id, username: req.user.username});
       });
     }
   });
@@ -47,7 +47,7 @@ module.exports.login = async (req, res) => {
         return res.status(500).json(err);
       }
       console.log("user logged in");
-      res.json({ status: true, user: req.user._id });
+      res.json({ status: true, user: req.user._id, username: req.user.username });
     });
   })(req, res);
 };

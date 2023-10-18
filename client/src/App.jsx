@@ -42,6 +42,7 @@ const App = () => {
 
   const ProtectedRoute = ({children})=>{
     const navigate = useNavigate();
+    const {posts, authenticated} = useContext(UserContext);
 
     useEffect(() => {
       console.log("check");

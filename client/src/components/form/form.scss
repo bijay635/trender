@@ -3,8 +3,23 @@
   height: wrap-content;
   padding: 1rem 1rem;
 
+  .text {
+    position: relative;
+
+    .spinner-gif {
+      position: absolute;
+      z-index: 1;
+      width: 125px;
+      top: -25px;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+
   .image-upload {
     margin-top: 20px;
+
 
     label:hover {
       cursor: pointer;

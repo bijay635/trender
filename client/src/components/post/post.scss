@@ -1,3 +1,52 @@
 .Post{
   background-color: aqua;
 }
+
+/* post.scss */
+
+.postValues {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nametag {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.imagetag-container {
+  // max-height: 300px;
+  overflow: hidden;
+}
+
+.imagetag {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 12px;
+  display: block;
+  object-fit: cover;
+}
+
+.captiontag {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+/*
+.likestag {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 8px;
+}
+*/
+
+.commenttag {
+  font-size: 14px;
+  color: #888;
+}

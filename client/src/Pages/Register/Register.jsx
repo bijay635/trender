@@ -14,7 +14,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {authenticated, setAuthenticated} = useContext(UserContext);
+  const {authenticated, setAuthenticated, setPosts} = useContext(UserContext);
 
   const toastOptions = {
     postition: "top-center",
@@ -37,9 +37,17 @@ const Register = () => {
         setAuthenticated(true);
         localStorage.setItem(
           import.meta.env.VITE_LOCALHOST_KEY,
-          JSON.stringify({status: true, user: data.user}),
+          JSON.stringify({status: true, user: data.user, username: data.username}),
         );
         console.log("set in register");
+
+        // fetch posts
+        axios.get("/posts").then(response => {
+          setPosts(response.data);
+        })
+        .catch(err => {
+          setPosts([]);
+        });
         navigate("/");
       }
     } catch (err) {
