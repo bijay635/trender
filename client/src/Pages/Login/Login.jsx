@@ -37,16 +37,20 @@ const Login = () => {
     const {username, password} = values;
     try {
       const {data} = await axios.post("/auth/login", {username, password});
-      if (data.status === true) {
+      if (data.success === true) {
         setAuthenticated(true);
         localStorage.setItem(
           import.meta.env.VITE_LOCALHOST_KEY,
-          JSON.stringify({status: true, user: data.user, username: username}),
+          JSON.stringify({success: true, user: data.user, token: data.token, expiresIn: data.expiresIn}),
         );
         console.log("set in login");
         
         // fetch posts
-        axios.get("/posts").then(response => {
+        axios.get("/posts", {
+        headers: {
+          Authorization: data.token
+        }
+      }).then(response => {
           setPosts(response.data);
         })
         .catch(err => {

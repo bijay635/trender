@@ -29,7 +29,6 @@ const dUriParser = new DatauriParser();
  * @param: {Object} req containing the field object
  * @returns: {String} The data url from the string buffer
 */
-
 const dataUri = req =>
   dUriParser.format(path.extname(req.file.originalname).toString(),
               req.file.buffer);

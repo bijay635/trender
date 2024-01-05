@@ -9,10 +9,6 @@ const PostSchema = mongoose.Schema({
     type: Map,
     of: Boolean,
   },
-  comments: {
-    type: Array,
-    default: [],
-  },
 }, {timestamps: true});
 
 const PostModel = new mongoose.model("Post", PostSchema);

@@ -4,8 +4,9 @@ import axios from "axios"
 import "./Register.scss"
 import { UserContext } from "../../context/UserContext"
 import GoogleIcon from '@mui/icons-material/Google';
-import {ToastContainer, toast} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+// import {ToastContainer, toast} from "react-toastify";
+import toast, {Toaster} from "react-hot-toast";
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 const Register = () => {
@@ -14,45 +15,50 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {authenticated, setAuthenticated, setPosts} = useContext(UserContext);
+  // const {authenticated, setAuthenticated, setPosts} = useContext(UserContext);
 
-  const toastOptions = {
-    postition: "top-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-  }
+  // const toastOptions = {
+  //   postition: "top-center",
+  //   autoClose: 5000,
+  //   hideProgressBar: false,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   progress: undefined,
+  //   theme: "colored",
+  // }
 
   const navigate = useNavigate();
 
   async function handleSubmit(ev) {
     ev.preventDefault();
     try {
-      const {data} = await axios.post("/auth/register", {name, username, email, password});
-      if (data.status === true) {
-        setAuthenticated(true);
-        localStorage.setItem(
-          import.meta.env.VITE_LOCALHOST_KEY,
-          JSON.stringify({status: true, user: data.user, username: data.username}),
-        );
-        console.log("set in register");
-
-        // fetch posts
-        axios.get("/posts").then(response => {
-          setPosts(response.data);
-        })
-        .catch(err => {
-          setPosts([]);
-        });
-        navigate("/");
+      const promise = axios.post("/auth/register", {name, username, email, password});
+      toast.promise(
+        promise,
+         {
+           loading: 'Registering...',
+           success: <b>Registered successfully.</b>,
+           error: <b>Registration failed.</b>,
+         }
+      );
+      const {data} = await promise;
+      console.log("Before toast");
+      toast(<b>Verify your email</b>, {
+        duration: 5000,
+        icon: '📩',
+      });
+      console.log("After toast");
+      if (data.success === true) {
+        console.log("Registration success.", data);
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
       }
+
     } catch (err) {
-      // toast.error(err.response.data.message, toastOptions);
-      toast.error("A user with the given username/email is already registered", toastOptions);
+      console.log("Registration failed.", err.response.data.error);
+      toast.error("A user with the given username/email is already registered", {duration: 3000});
     }
   }
 
@@ -63,25 +69,11 @@ const Register = () => {
     );
   }
 
-  useEffect(() => {
-    if (localStorage.getItem(import.meta.env.VITE_LOCALHOST_KEY)) {
-      navigate("/");
-    }
-  }, []);
-
   return (
     <>
-      <ToastContainer 
+      <Toaster
         position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
+        reverseOrder={false}
       />
       <div className="register">
         <div className="card">

@@ -146,7 +146,7 @@ const Home = () => {
   return (
     <div className='home'>
       <h1>Home</h1>
-      <h3>{currentUser?.username}</h3>
+      <h3>{currentUser?.user.username}</h3>
       <Form />
       <h1>Main Stream</h1>
       <InfiniteScroll
@@ -169,7 +169,7 @@ const Home = () => {
           )
         })}
       </InfiniteScroll>
-      {hasMore && <img className='spinner-gif' src={spinner} alt='spinner' />}
+      {/* {hasMore && <img className='spinner-gif' src={spinner} alt='spinner' />} */}
     </div>
   )
 }

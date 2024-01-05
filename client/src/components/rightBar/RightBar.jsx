@@ -139,7 +139,7 @@ const RightBar = () => {
               <span>Durgesh Gupta</span>
             </div>
           </div>
-          <div className="user">
+          {/* <div className="user">
             <div className="userInfo">
               <img
                 src={avatar}
@@ -198,7 +198,7 @@ const RightBar = () => {
               <div className="online" />
               <span>Durgesh Gupta</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

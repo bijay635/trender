@@ -14,16 +14,29 @@ export function UserContextProvider({children}) {
 
   useEffect(() => {
     console.log("context");
-    axios.get("/auth/profile").then(response => {
-      setAuthenticated(response.data.status);
+    let currentUser = localStorage.getItem(import.meta.env.VITE_LOCALHOST_KEY) ? JSON.parse(localStorage.getItem(import.meta.env.VITE_LOCALHOST_KEY)) : null;
+    let token = currentUser?.token;
+    // console.log(token);
+    axios.get("/auth/protected", {
+      headers: {
+        Authorization: token
+      }
+    }).then(response => {
+      console.log("Authenticated");
+      setAuthenticated(response.data.success);
       localStorage.setItem(
         import.meta.env.VITE_LOCALHOST_KEY,
-        JSON.stringify({status: true, user: response.data.user, username: response.data.username}),
+        JSON.stringify(currentUser),
       );
 
       // fetch posts
-      axios.get("/posts").then(response => {
+      axios.get("/posts", {
+        headers: {
+          Authorization: token
+        }
+      }).then(response => {
         setPosts(response.data);
+        console.log("posts set");
       })
       .catch(err => {
         setPosts([]);

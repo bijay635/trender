@@ -71,43 +71,43 @@ module.exports.getUserPosts = async (req, res) => {
 
 
 /* UPDATE POST */
-module.exports.likePost = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { userId } = req.body;
-    const post = await Post.findById(id);
-    const isLiked = post.likes.get(userId);
+// module.exports.likePost = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { userId } = req.body;
+//     const post = await Post.findById(id);
+//     const isLiked = post.likes.get(userId);
 
-    if (isLiked) {
-      post.likes.delete(userId);
-    } else {
-      post.likes.set(userId, true);
-    }
+//     if (isLiked) {
+//       post.likes.delete(userId);
+//     } else {
+//       post.likes.set(userId, true);
+//     }
 
-    const updatedPost = await Post.findByIdAndUpdate(
-      id,
-      {likes: post.likes}
-    );
-    res.status(200).json(updatedPost);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
-};
+//     const updatedPost = await Post.findByIdAndUpdate(
+//       id,
+//       {likes: post.likes}
+//     );
+//     res.status(200).json(updatedPost);
+//   } catch (err) {
+//     res.status(404).json({ message: err.message });
+//   }
+// };
 
 
-module.exports.commentPost = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { userId, comment } = req.body;
-    const post = await Post.findById(id);
-    post.comments.push({ userId, comment });
+// module.exports.commentPost = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { userId, comment } = req.body;
+//     const post = await Post.findById(id);
+//     post.comments.push({ userId, comment });
 
-    const updatedPost = await Post.findByIdAndUpdate(
-      id,
-      {comments: post.comments}
-    );
-    res.status(200).json(updatedPost);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
-};
+//     const updatedPost = await Post.findByIdAndUpdate(
+//       id,
+//       {comments: post.comments}
+//     );
+//     res.status(200).json(updatedPost);
+//   } catch (err) {
+//     res.status(404).json({ message: err.message });
+//   }
+// };

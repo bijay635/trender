@@ -29,17 +29,23 @@ const Form = () => {
   const handlePost = async(e) => {
     e.preventDefault();
 
+    let currentUser = localStorage.getItem(import.meta.env.VITE_LOCALHOST_KEY) ? JSON.parse(localStorage.getItem(import.meta.env.VITE_LOCALHOST_KEY)) : null;
+    let token = currentUser?.token;
+
     setLoader(true);
-    const { user: id, username } = JSON.parse(localStorage.getItem(import.meta.env.VITE_LOCALHOST_KEY));
     const formData = new FormData();
-    formData.append("userId", id);
-    formData.append("username", username);
+    formData.append("userId", currentUser.user._id);
+    formData.append("username", currentUser.user.username);
     formData.append("description", post);
     if (image) {
       formData.append("picture", image);
     }
 
-    const response = await axios.post("/posts", formData);
+    const response = await axios.post("/posts", formData, {
+      headers: {
+        Authorization: token
+      }
+    });
     setPosts(response.data);
     setLoader(false);
     setImage(null);
@@ -59,7 +65,7 @@ const Form = () => {
             cols="100"
             value={post}
             onChange={e => setPost(e.target.value)}
-           />
+          />
           {loader && <img className='spinner-gif' src={spinner} alt='spinner' />}
         </div>
         <div className="image-upload">
